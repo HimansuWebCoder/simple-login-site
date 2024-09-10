@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>User Login</title>
+	</head>
+	<body>
+		<div class="login-container">
+			<h1>Login</h1>
+			Email:
+			<input
+				class="input-email input"
+				type="text"
+				name=""
+				placeholder="Place Your Email"
+			/><br /><br />
+			Password:
+			<input
+				class="input-password input"
+				type="Password"
+				placeholder="Place Your Password"
+				name=""
+			/><br />
+			<button type="submit" id="login-btn">Login</button>
+		</div>
+		<h2></h2>
+		<h3></h3>
+		<h4></h4>
+		<script>
+			const emailInput = document.querySelector(".input-email");
+			const passwordInput = document.querySelector(".input-password");
+			const loginBtn = document.querySelector("#login-btn");
+
+			const name = document.querySelector("h2");
+			const passion = document.querySelector("h3");
+			const email = document.querySelector("h4");
+
+			loginBtn.addEventListener("click", () => {
+				fetch("http://localhost:3000/login", {
+					method: "post",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						email: emailInput.value,
+						password: passwordInput.value,
+					}),
+				})
+					.then((response) => response.json()) // Ensure this is JSON
+					.then((data) => {
+						console.log(data); // Debug response
+						if (data.message === "Login successful") {
+							// Use profile data and content as needed
+							console.log("Profile Data:", data.profile);
+							console.log("Content:", data.content);
+
+							// Optionally store profile and content data
+							localStorage.setItem(
+								"userProfile",
+								JSON.stringify(data.profile),
+							);
+							localStorage.setItem("userContent", data.content);
+
+							// Redirect to content page
+							window.location = "/view";
+						} else {
+							console.error("Login failed:", data.message);
+						}
+					})
+					.catch((err) => console.error("Error:", err));
+			});
+
+			fetch("http://localhost:3000/content")
+				.then((res) => res.json())
+				.then((data) => {
+					console.log(data.profile);
+					name.textContent = data.profile.name;
+					passion.textContent = data.profile.passion;
+					email.textContent = data.profile.email;
+				});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>User Login</title>
+	</head>
+	<body>
+          <h1></h1>
+          <h2></h2>
+          <h3></h3>
+		</div>
+		<script>
+			const name = document.querySelector("h1");
+			const passion = document.querySelector("h2");
+			const email = document.querySelector("h3");
+            
+            fetch("http://localhost:3000/content")
+             .then(res => res.json())
+             .then(data => {
+                console.log(data.profile);
+                name.textContent = data.profile.name;
+                passion.textContent = data.profile.passion;
+                email.textContent = data.profile.email;
+             })
+
+		</script>
+	</body>
+</html>
