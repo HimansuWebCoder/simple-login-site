@@ -19,6 +19,7 @@
              .then(res => res.json())
              .then(data => {
                 console.log(data.profile);
+                console.log(data);
                 name.textContent = data.profile.name;
                 passion.textContent = data.profile.passion;
                 email.textContent = data.profile.email;
