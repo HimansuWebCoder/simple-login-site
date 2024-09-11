@@ -9,11 +9,13 @@
           <h1></h1>
           <h2></h2>
           <h3></h3>
+          <h4></h4>
 		</div>
 		<script>
 			const name = document.querySelector("h1");
 			const passion = document.querySelector("h2");
 			const email = document.querySelector("h3");
+			const skills = document.querySelector("h4");
             
             fetch("http://localhost:3000/content")
              .then(res => res.json())
@@ -23,6 +25,7 @@
                 name.textContent = data.profile.name;
                 passion.textContent = data.profile.passion;
                 email.textContent = data.profile.email;
+                skills.textContent = data.skills.skill;
              })
 
 		</script>

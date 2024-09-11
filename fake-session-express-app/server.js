@@ -43,18 +43,47 @@ const users = [
         passwordHash: bcrypt.hashSync("password2", 10),
         content: "User 2 content",
     },
+    {
+        id: 3,
+        email: "user3@example.com",
+        passwordHash: bcrypt.hashSync("password3", 10),
+        content: "User 2 content",
+    },
 ];
 
 const profile = [
     {
+        id: 1,
         email: "user1@example.com",
         name: "Himansu",
         passion: "Backend Development",
     },
     {
+        id: 2,
         email: "user2@example.com",
         name: "Prashant",
         passion: "Frontend Development",
+    },
+    {
+        id: 3,
+        email: "user3@example.com",
+        name: "Chinmaya",
+        passion: "Python Development",
+    },
+];
+
+const skills = [
+    {
+        id: 1,
+        skill: "HTML",
+    },
+    {
+        id: 2,
+        skill: "CSS",
+    },
+    {
+        id: 3,
+        skill: "JS",
     },
 ];
 
@@ -68,11 +97,14 @@ app.post("/login", async (req, res) => {
 
         // Find profile data based on email
         const userProfile = profile.find((profile) => profile.email === email);
+        // Find skills data based on id
+        const userSkills = skills.find((skill) => skill.id === user.id);
 
         // Prepare response with both profile and content data
         return res.json({
             message: "Login successful",
             profile: userProfile,
+            skills: userSkills,
             content: user.content,
         });
     } else {
@@ -89,8 +121,11 @@ app.get("/content", (req, res) => {
             const userProfile = profile.find(
                 (profile) => profile.email === user.email,
             );
-            if (userProfile) {
-                res.json({ profile: userProfile }); // Send profile data
+
+            const userSkills = skills.find((skill) => skill.id === user.id);
+            console.log(userSkills);
+            if (userProfile && userSkills) {
+                res.json({ profile: userProfile, skills: userSkills }); // Send profile data
                 // res.sendFile(path.join(__dirname, "./view.html"));
             } else {
                 res.status(404).send("Profile not found");
@@ -103,7 +138,6 @@ app.get("/content", (req, res) => {
     }
 });
 
-
 app.listen(3000, () => {
-    console.log("Server running on port 3000");
+    console.log("Server running on port http://localhost:3000");
 });
