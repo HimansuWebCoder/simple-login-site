@@ -8,6 +8,13 @@
 	<body>
 		<div class="login-container">
 			<h1>Login</h1>
+			Name:
+			<input
+				class="input-email name"
+				type="text"
+				name=""
+				placeholder="Place Your Email"
+			/><br /><br />
 			Email:
 			<input
 				class="input-email input"
@@ -28,6 +35,7 @@
 		<h3></h3>
 		<h4></h4>
 		<script>
+			const nameInput = document.querySelector(".name");
 			const emailInput = document.querySelector(".input-email");
 			const passwordInput = document.querySelector(".input-password");
 			const loginBtn = document.querySelector("#login-btn");
@@ -41,6 +49,7 @@
 					method: "post",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
+						name: nameInput.value,
 						email: emailInput.value,
 						password: passwordInput.value,
 					}),
@@ -69,14 +78,13 @@
 					.catch((err) => console.error("Error:", err));
 			});
 
-			fetch("http://localhost:3000/content")
-				.then((res) => res.json())
-				.then((data) => {
-					console.log(data.profile);
-					name.textContent = data.profile.name;
-					passion.textContent = data.profile.passion;
-					email.textContent = data.profile.email;
-				});
+			// fetch("http://localhost:3000/get-session")
+			// 	.then((res) => res.json())
+			// 	.then((data) => {
+			// 		console.log(data.profile);
+			// 		name.textContent = data.profile.name;
+			// 		email.textContent = data.profile.email;
+			// 	});
 		</script>
 	</body>
 </html>
