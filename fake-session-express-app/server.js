@@ -216,28 +216,145 @@ app.get("/view", (req, res) => {
     res.sendFile(path.join(__dirname, "login.html"));
 });
 
-app.post("/login", (req, res) => {
-    const { name, email, password } = req.body;
+app.get("/redirect", (req, res) => {
+    res.sendFile(path.join(__dirname, "redirect.html"));
+});
+// app.post("/login", (req, res) => {
+//     const { name, email, password } = req.body;
 
-    db("users")
-        .insert({ name, email, password })
-        .returning("*")
-        .then((data) => {
-            console.log(data);
-            req.session.userId = data[0].id;
-            res.json(req.session.userId);
-        })
-        .catch((error) => {
-            console.error(error);
-            res.status(500).json({ error: "An error occurred" });
-        });
-});
-app.get("/get-session", (req, res) => {
-    res.json({ userId: req.session.userId });
-    console.log(req.session.userId);
-});
+//     db("users")
+//         .insert({ name, email, password })
+//         .returning("*")
+//         .then((data) => {
+//             // req.session.userId = data[0].id;
+//             // res.json(req.session.userId);
+//             if (!data || data.length === 0) {
+//                 throw new Error("Insertion failed or returned no data.");
+//             }
+//             res.redirect("/content");
+//             // console.log(data);
+//         })
+//         .catch((error) => {
+//             console.error(error);
+//             res.status(500).json({ error: "An error occurred" });
+//         });
+// });
+// app.get("/get-session", (req, res) => {
+//     res.json({ userId: req.session.userId });
+//     console.log(req.session.userId);
+// });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// app.get("/content", (req, res) => {
+//     res.json({ userId: req.session.userId });
+// });
+
+// app.get("/content", (req, res) => {
+//     console.log("Content route accessed.");
+//     res.send("Welcome to the content page.");
+// });
+
+// app.post("/test-redirect", (req, res) => {
+//     console.log("Test redirect route accessed.");
+//     res.redirect("/get-session");
+// });
+
+// app.get;
+
+// app.post("/post", (req, res) => {
+//     const name = req.body;
+//     res.redirect("/all-posts");
+// });
+
+// app.get("/all-posts", (req, res) => {
+//     console.log("accessed");
+//     res.json({ name: "name accessed", like: 23 });
+// });
+
+// const PORT = process.env.PORT || 3000;
+// app.listen(PORT, () => {
+//     console.log(`Server is running on port http://localhost:${PORT}`);
+// });
+
+// const express = require("express");
+// const app = express();
+// const bodyParser = require("body-parser");
+// const cors = require("cors");
+// const session = require("express-session");
+
+// app.use(express.json());
+
+// app.use(
+//     session({
+//         secret: "helo",
+//         resave: false,
+//         saveUninitialized: true,
+//         cookie: { secure: false },
+//     }),
+// );
+
+// const login = {
+//     username: "himansu",
+//     password: "123",
+// };
+
+// const userData = [
+//     {
+//         login: "himansu",
+//         password: "123",
+//     },
+// ];
+
+// // app.get("/login", (req, res) => {
+// //  req.session.user = login;
+// //  res.send("user login successfully");
+// //  res.json("wrong username and password! please try again");
+// // });
+
+// app.post("/login", (req, res) => {
+//     const { login, password } = req.body;
+
+//     const userFind = userData.find(
+//         (user) => user.login === login && user.password === password,
+//     );
+
+//     if (!userFind) {
+//         return res.json("wrong username and password! please try again");
+//     }
+//     {
+//         req.session.user = userData;
+//         return res.send("user login successfully");
+//     }
+// });
+
+// app.post("/signup", (req, res) => {
+//     const { login, password } = req.body;
+//     if (!login || !password) {
+//         res.json("username and password must required!");
+//     } else {
+//         userData.push({ login, password });
+//         req.session.user = userData;
+//         res.json("user signup successfully");
+//     }
+// });
+
+// app.get("/user", (req, res) => {
+//     const user = req.session.user;
+
+//     // res.json(user);
+//     if (!req.session.user) {
+//         res.json("you need to login to see the user");
+//     } else {
+//         res.json(userData);
+//         console.log(userData);
+//     }
+// });
+
+// app.get("/users", (req, res) => {
+//     const users = req.session.user;
+//     res.json(users);
+//     console.log(users);
+// });
+
+// app.listen(3000, () => {
+//     console.log(`server running at ${3000}`);
+// });
