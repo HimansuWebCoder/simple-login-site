@@ -16,6 +16,8 @@ const user = {
 	email: 'test'
 }
 
+const user2 = []
+
 function authenticate(req, res, next) {
 	console.log("authenticate session email", req.session.email);
 	if (req.session.email) {
@@ -24,6 +26,14 @@ function authenticate(req, res, next) {
 		res.json({Status: "Unauthorized user login"})
 	}
 }
+
+app.post('/signup', (req, res) => {
+	const { email } = req.body;
+     req.session.email = email;
+	user2.push(email);
+	res.json({message: "signup successfully!", user: user2})
+
+})
 
 app.post('/login', (req, res) => {
      const { email } = req.body;
